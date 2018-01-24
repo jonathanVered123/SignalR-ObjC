@@ -93,6 +93,10 @@
 		39B355021C7CE27B0076E8E0 /* SREventSourceStreamReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B355001C7CE27B0076E8E0 /* SREventSourceStreamReaderTests.m */; };
 		67F08F302448FB904F57EA11 /* Pods_SignalR_Client_iOS_SignalR_Client_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD05576397746170EB20A0D9 /* Pods_SignalR_Client_iOS_SignalR_Client_iOSTests.framework */; };
 		77DDD23056DDF5601554BBC1 /* Pods_SignalR_Client_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31B651E0317CA0F4E26E1338 /* Pods_SignalR_Client_iOS.framework */; };
+		BED1126620190B7A002F1F78 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1126420190B79002F1F78 /* Reachability.m */; };
+		BED1126720190B7A002F1F78 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1126420190B79002F1F78 /* Reachability.m */; };
+		BED1126820190B7A002F1F78 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = BED1126520190B7A002F1F78 /* Reachability.h */; };
+		BED1126920190B7A002F1F78 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = BED1126520190B7A002F1F78 /* Reachability.h */; };
 		C9D717AA1579C0EBB9DB7991 /* Pods_SignalR_Client_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E42E16292B5ADF0F39E2488 /* Pods_SignalR_Client_OSX.framework */; };
 		EB0E00004390814A26BA2CFE /* Pods_SignalR_Client_OSX_SignalR_Client_OSXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD1B5DC6D0FC39C5177F9A65 /* Pods_SignalR_Client_OSX_SignalR_Client_OSXTests.framework */; };
 /* End PBXBuildFile section */
@@ -214,6 +218,8 @@
 		8CFF876916E13FF500B67FCA /* SRHubConnectionInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRHubConnectionInterface.h; sourceTree = "<group>"; };
 		A06755FFA3D124F078D03209 /* Pods-SignalR.Client.iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SignalR.Client.iOS.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-SignalR.Client.iOS/Pods-SignalR.Client.iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		A186B2D8C7AADAB56339675B /* Pods-SignalR.Client.OSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SignalR.Client.OSX.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-SignalR.Client.OSX/Pods-SignalR.Client.OSX.debug.xcconfig"; sourceTree = "<group>"; };
+		BED1126420190B79002F1F78 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		BED1126520190B7A002F1F78 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		CD05576397746170EB20A0D9 /* Pods_SignalR_Client_iOS_SignalR_Client_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SignalR_Client_iOS_SignalR_Client_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFFC3148AAF3EA599328B719 /* Pods-SignalR.Client.OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SignalR.Client.OSX.release.xcconfig"; path = "../Pods/Target Support Files/Pods-SignalR.Client.OSX/Pods-SignalR.Client.OSX.release.xcconfig"; sourceTree = "<group>"; };
 		ECA811FA4ADEF34C2DB45A4D /* Pods-SignalR.Client.iOS-SignalR.Client.iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SignalR.Client.iOS-SignalR.Client.iOSTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-SignalR.Client.iOS-SignalR.Client.iOSTests/Pods-SignalR.Client.iOS-SignalR.Client.iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -374,6 +380,8 @@
 		3920781715AF13F6009B959E /* SignalR.Client */ = {
 			isa = PBXGroup;
 			children = (
+				BED1126520190B7A002F1F78 /* Reachability.h */,
+				BED1126420190B79002F1F78 /* Reachability.m */,
 				3920782515AF13F6009B959E /* Hubs */,
 				3920783715AF13F6009B959E /* Infrastructure */,
 				39EBAC2816D03F1000C6F359 /* SRConnectionInterface.h */,
@@ -505,6 +513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39302A281C6977800061C6B5 /* SignalR.h in Headers */,
+				BED1126820190B7A002F1F78 /* Reachability.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +521,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED1126920190B7A002F1F78 /* Reachability.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -833,6 +843,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED1126620190B7A002F1F78 /* Reachability.m in Sources */,
 				39302A201C69768D0061C6B5 /* SRLongPollingTransport.m in Sources */,
 				39302A0B1C69768D0061C6B5 /* SRHubConnection.m in Sources */,
 				39302A151C69768D0061C6B5 /* SRHeartbeatMonitor.m in Sources */,
@@ -887,6 +898,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED1126720190B7A002F1F78 /* Reachability.m in Sources */,
 				39302A501C6979E10061C6B5 /* SRHeartbeatMonitor.m in Sources */,
 				39302A4E1C6979E10061C6B5 /* SRConnection.m in Sources */,
 				39302A451C6979E10061C6B5 /* SRHubConnection.m in Sources */,

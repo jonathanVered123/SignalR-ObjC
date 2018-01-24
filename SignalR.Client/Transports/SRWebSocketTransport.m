@@ -27,6 +27,9 @@
 #import "SRWebSocketConnectionInfo.h"
 #import "SRConnectionInterface.h"
 #import "SRConnectionExtensions.h"
+#import "Reachability.h"
+
+
 
 typedef void (^SRWebSocketStartBlock)(id response, NSError *error);
 
@@ -36,6 +39,9 @@ typedef void (^SRWebSocketStartBlock)(id response, NSError *error);
 @property (strong, nonatomic, readonly) SRWebSocketConnectionInfo *connectionInfo;
 @property (copy) SRWebSocketStartBlock startBlock;
 @property (strong, nonatomic, readwrite) NSBlockOperation * connectTimeoutOperation;
+@property (strong, nonatomic, readwrite) NSTimer * connectivityTimer;
+@property (strong, nonatomic, readwrite) NSTimer * reconnectTimer;
+@property (assign, nonatomic, readwrite) BOOL shouldReconnect;
 
 @end
 
@@ -158,18 +164,69 @@ typedef void (^SRWebSocketStartBlock)(id response, NSError *error);
 }
 
 - (void)reconnect:(id <SRConnectionInterface>)connection {
+    self.shouldReconnect = YES;
+    self.reconnectTimer  = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(willReconnectOnConnetivityReturn) userInfo:nil repeats:YES];
+    
+    self.connectivityTimer  = [NSTimer scheduledTimerWithTimeInterval:25.0 target:self selector:@selector(endReconnectTimer) userInfo:nil repeats:NO];
+}
+
+- (void)endReconnectTimer{
     __weak __typeof(&*self)weakSelf = self;
     SRLogWSDebug(@"will reconnect in %@",self.reconnectDelay);
-    [[NSBlockOperation blockOperationWithBlock:^{
-        __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+    
+    if (self.shouldReconnect) {
+        self.shouldReconnect = NO;
         
-        if ([SRConnection ensureReconnecting:connection]) {
-            SRLogWSWarn(@"reconnecting");
-            [strongSelf performConnect:nil reconnecting:YES];
-        }
-        
-    }] performSelector:@selector(start) withObject:nil afterDelay:[self.reconnectDelay integerValue]];
+        [[NSBlockOperation blockOperationWithBlock:^{
+            __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+            
+            if ([SRConnection ensureReconnecting:[_connectionInfo connection]]) {
+                SRLogWSWarn(@"reconnecting");
+                [strongSelf performConnect:nil reconnecting:YES];
+            }
+            
+        }] performSelector:@selector(start) withObject:nil afterDelay:[self.reconnectDelay integerValue]];
+    }
+    
+    [self.reconnectTimer invalidate];
+    self.reconnectTimer = nil;
+    [self.connectivityTimer invalidate];
+    self.connectivityTimer = nil;
 }
+
+- (void)willReconnectOnConnetivityReturn{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+
+    if(networkStatus == NotReachable)
+    {
+        return ;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    SRLogWSDebug(@"will reconnect in %@",self.reconnectDelay);
+    if (self.shouldReconnect) {
+        self.shouldReconnect = NO;
+        
+        [[NSBlockOperation blockOperationWithBlock:^{
+            __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+            
+            if ([SRConnection ensureReconnecting:[_connectionInfo connection]]) {
+                SRLogWSWarn(@"reconnecting");
+                [strongSelf performConnect:nil reconnecting:YES];
+            }
+            
+        }] performSelector:@selector(start) withObject:nil afterDelay:[self.reconnectDelay integerValue]];
+        
+    }
+
+    [self.reconnectTimer invalidate];
+    self.reconnectTimer = nil;
+    [self.connectivityTimer invalidate];
+    self.connectivityTimer = nil;
+}
+
+
 
 #pragma mark -
 #pragma mark SRWebSocketDelegate
